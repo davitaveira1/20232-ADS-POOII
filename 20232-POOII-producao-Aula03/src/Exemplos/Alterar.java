@@ -10,30 +10,37 @@ import db.conexao;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author Davi
+ */
+public class Alterar {
 
-public class Inserir {
-    
     public static void main(String[] args) {
-        
-        Connection conn=null;
-        PreparedStatement pst=null;
-        
-        conn = conexao.getConnection();        
-        
+
+        Connection conn = null;
+        PreparedStatement pst = null;
+
+        conn = conexao.getConnection();
         try {
-            pst = conn.prepareStatement("insert into alunos "
-                    + "set nome=?");
-            pst.setString(1, "Davi Taveira");
+            pst = conn.prepareStatement("update alunos set "
+                    + "nome=? "
+                    + "where codigo=?");
+
+            pst.setString(1, "Davi Taveira Alencar Alarcao");
+            pst.setInt(2, 1);
             int linha = pst.executeUpdate();
             if(linha>0){
                 System.out.println("SQL executado com sucesso!");
             }else{
                 System.out.println("SQL não executado!");
             }
+            
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro:"+ ex);
-        }     
-        
+            JOptionPane.showMessageDialog(null, "Erro: " + ex);
+        }
+
     }
-    
+
 }
