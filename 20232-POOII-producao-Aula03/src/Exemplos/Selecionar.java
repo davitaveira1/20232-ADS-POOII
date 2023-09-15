@@ -6,6 +6,7 @@ package Exemplos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import db.conexao;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,27 +17,28 @@ import javax.swing.JOptionPane;
  *
  * @author Davi
  */
-public class Excluir {
+public class Selecionar {
 
     public static void main(String[] args) {
 
         Connection conn = null;
         PreparedStatement pst = null;
-        
+        ResultSet rs = null;
+
         conn = conexao.getConnection();
-        
         try {
-            pst = conn.prepareStatement("delete from alunos "
-                    + "where codigo=?");
-            pst.setInt(1, 3);
-            int linha = pst.executeUpdate();
-            if(linha>0){
-                System.out.println("SQL executado com sucesso!");
-            }else{
-                System.out.println("SQL não executado!");
+            pst = conn.prepareStatement("select * from alunos "
+                    + "where codigo=1");
+            //pst.setInt(1, 1);
+
+            rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                System.out.println("Nome: " + rs.getString("nome"));
             }
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro: "+ ex);
+            JOptionPane.showMessageDialog(null, "Erro: " + ex);
         }
 
     }
