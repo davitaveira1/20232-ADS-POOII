@@ -6,12 +6,17 @@ package Telas;
 
 import javax.swing.JOptionPane;
 import Exemplos.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Davi
  */
 public class TelaLogin extends javax.swing.JFrame {
-    
+
     autenticacao controle = new autenticacao();
 
     /**
@@ -98,20 +103,40 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAcessarActionPerformed
         // TODO add your handling code here:
-        
+
         String login = campoNome.getText();
         String senha = campoSenha.getText();
-        
-        if(controle.validar(login, senha)){
+
+        ResultSet rsLogin = controle.validarResultSet(login, senha);
+       
+        try {
+            //rsLogin.beforeFirst();
+            if (rsLogin!=null) {
+                JOptionPane.showMessageDialog(null,"User: "+rsLogin.getString("login"));
+                new TelaPrincipal().setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro login/senha");
+                campoNome.setText("");
+                campoSenha.setText("");
+                campoNome.requestFocus();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro: " + ex);
+        }
+
+        /*
+            if(controle.validar(login, senha)){
             new TelaPrincipal().setVisible(true);
-            dispose();          
-        }else{
+            dispose();
+            }else{
             JOptionPane.showMessageDialog(null,"Erro login/senha");
             campoNome.setText("");
             campoSenha.setText("");
             campoNome.requestFocus();
-        }
-        
+            }
+         */
+
     }//GEN-LAST:event_btAcessarActionPerformed
 
     /**
