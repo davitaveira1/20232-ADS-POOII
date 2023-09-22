@@ -113,7 +113,12 @@ public class TelaLogin extends javax.swing.JFrame {
             //rsLogin.beforeFirst();
             if (rsLogin!=null) {
                 JOptionPane.showMessageDialog(null,"User: "+rsLogin.getString("login"));
-                new TelaPrincipal().setVisible(true);
+                
+                TelaPrincipal tp = new TelaPrincipal();
+                
+                tp.setVisible(true);
+                tp.lbUser.setText("User logado: "+rsLogin.getString("login"));
+                
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro login/senha");
