@@ -31,4 +31,37 @@ import db.conexao;
  */
 public class controlaRelatorios {
     
+    Connection conn = conexao.getConnection();
+    ResultSet rs = null;
+    Statement st = null;
+    PreparedStatement pst = null;
+
+    public void relatorio1() {
+
+        try {
+
+            st = conn.createStatement();
+            rs = st.executeQuery("select * from alunos where codigo=5");
+   
+            URL arquivo = getClass().getResource("/relatorios/relatorioExemplo.jasper");
+            //JOptionPane.showMessageDialog(null, "Arquivo: " + arquivo);
+
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(arquivo);
+
+            //inserindo parâmetro no relatório
+            Map<String, Object> params = new HashMap<String, Object>();
+
+            //resgate da chave userLogadoSistema
+            //String userLogadoSistema = System.getProperty("userLogadoSistema");            
+            //params.put("userLogado",userLogadoSistema);
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            JasperPrint print = JasperFillManager.fillReport(jasperReport, params, jrRS);
+            JasperViewer.viewReport(print);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e);
+        }
+
+    }    
+    
 }

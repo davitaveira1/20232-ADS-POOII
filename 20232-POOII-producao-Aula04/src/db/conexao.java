@@ -21,7 +21,7 @@ public class conexao {
         if (conn == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost/poo2-teste", "root", "");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost/poo2-producao", "root", "");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Erro: "+ e);
             }
