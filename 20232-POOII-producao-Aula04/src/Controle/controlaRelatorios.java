@@ -51,9 +51,15 @@ public class controlaRelatorios {
             //inserindo parâmetro no relatório
             Map<String, Object> params = new HashMap<String, Object>();
 
-            //resgate da chave userLogadoSistema
-            //String userLogadoSistema = System.getProperty("userLogadoSistema");            
-            //params.put("userLogado",userLogadoSistema);
+            //set da chave userLogadoSistema
+            System.setProperty("userLogadoSistema", "Lucas");
+            
+            //get da chave userLogadoSistema
+            String userLogadoSistema = System.getProperty("userLogadoSistema"); 
+            
+            //configurando o label do relatorio.jasper
+            params.put("userLogado",userLogadoSistema);
+            
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
             JasperPrint print = JasperFillManager.fillReport(jasperReport, params, jrRS);
             JasperViewer.viewReport(print);
